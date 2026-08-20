@@ -1,0 +1,70 @@
+<!doctype html><meta charset="utf-8">
+<style>body{font:13px/1.5 monospace;margin:0;padding:12px;background:#fff}
+b{display:block;margin-top:10px}.ok{color:#0a7a2f}.bad{color:#c0262e;font-weight:700}iframe{width:390px;height:600px;position:absolute;left:-9999px}</style>
+<div id="out">running…</div>
+<script>
+var PAGES=['index.html','how-it-works.html','menu.html','about.html','contact.html'];
+var errs=[]; window.addEventListener('error',function(e){errs.push('parent: '+e.message)});
+var lines=[];
+function log(s,ok){lines.push('<div class="'+(ok?'ok':'bad')+'">'+(ok?'PASS':'FAIL')+'  '+s+'</div>')}
+function head(s){lines.push('<b>'+s+'</b>')}
+
+function testPage(p){return new Promise(function(res){
+  var f=document.createElement('iframe'); f.src=p;
+  f.onload=function(){
+    var w=f.contentWindow, d=f.contentDocument;
+    head(p);
+    var pageErrs=[]; w.addEventListener('error',function(e){pageErrs.push(e.message)});
+    setTimeout(function(){
+      // JS targets exist
+      var toggle=d.querySelector('.nav-toggle'), nav=d.querySelector('.nav');
+      log('.nav-toggle + .nav present', !!(toggle&&nav));
+      // nav toggle works
+      if(toggle&&nav){
+        toggle.click();
+        log('toggle opens nav (aria-expanded=true, data-open=true)',
+            toggle.getAttribute('aria-expanded')==='true' && nav.getAttribute('data-open')==='true');
+        toggle.click();
+        log('toggle closes nav', toggle.getAttribute('aria-expanded')==='false');
+      }
+      // video facade
+      var v=d.querySelector('.video[data-video-id]');
+      if(v){ v.click();
+        log('video click injects youtube-nocookie iframe',
+            !!d.querySelector('.video iframe') &&
+            d.querySelector('.video iframe').src.indexOf('youtube-nocookie.com')>-1);
+      }
+      // no external requests on load
+      var ext=[].slice.call(d.querySelectorAll('[src],[href]')).map(function(e){
+        return e.getAttribute('src')||e.getAttribute('href');}).filter(function(u){
+        return u && /^https?:\/\//.test(u) && u.indexOf('hotpotworld.com')<0;});
+      var loadExt=ext.filter(function(u){return !/ubereats|facebook|maps\.google|youtube/.test(u)});
+      log('no unexpected external asset URLs ('+loadExt.length+')', loadExt.length===0);
+      // broken images
+      var imgs=[].slice.call(d.images);
+      var broken=imgs.filter(function(i){return !i.complete||i.naturalWidth===0});
+      log(imgs.length+' images, 0 broken', broken.length===0);
+      if(broken.length) lines.push('<div class="bad">   '+broken.map(function(i){return i.getAttribute('src')}).join('<br>   ')+'</div>');
+      // alt text on content images
+      var noalt=imgs.filter(function(i){return i.getAttribute('alt')===null});
+      log('every img has an alt attribute', noalt.length===0);
+      // page errors
+      log('no runtime errors ('+pageErrs.length+')', pageErrs.length===0);
+      if(pageErrs.length) lines.push('<div class="bad">   '+pageErrs.join('<br>   ')+'</div>');
+      // title + meta description
+      log('has &lt;title&gt; and meta description',
+          !!d.title && !!d.querySelector('meta[name=description]'));
+      // single h1
+      log('exactly one &lt;h1&gt; ('+d.querySelectorAll('h1').length+')', d.querySelectorAll('h1').length===1);
+      f.remove(); res();
+    },900);
+  };
+  document.body.appendChild(f);
+})}
+PAGES.reduce(function(p,n){return p.then(function(){return testPage(n)})},Promise.resolve())
+ .then(function(){
+   var fails=lines.filter(function(l){return l.indexOf('bad')>-1}).length;
+   document.getElementById('out').innerHTML=
+     '<b>'+(fails?fails+' FAILURES':'ALL CHECKS PASSED')+'</b>'+lines.join('');
+ });
+</script>

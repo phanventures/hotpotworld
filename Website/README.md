@@ -141,6 +141,13 @@ the restaurant's listing on restaurantguru.com.
 7. **Awards.** Done 2026-08-20: the Seattle Times card links to the article and the
    Restaurant Guru badge is the real one, linked to the listing.
 
+## Share image
+
+`assets/img/web/og-share.jpg` (1200×630) is what Messages, Facebook and Slack show
+when the link is shared. It is rendered from `source/harness/og.html` with headless
+Chrome; edit that file and re-screenshot to change it. The `og:*` and `twitter:*`
+tags point at the GitHub Pages URL until the domain moves.
+
 ## Hosting
 
 The old site is WordPress. This replaces it with static files, which can go on

@@ -1,0 +1,35 @@
+<!doctype html><meta charset="utf-8">
+<style>
+ html,body{margin:0;background:#EFEBE7;font:14px/1.4 ui-sans-serif,system-ui,sans-serif;color:#1A1614}
+ .row{display:flex}
+ .col{width:660px}
+ .cap{padding:14px 18px;background:#fff;border-bottom:2px solid var(--c)}
+ .cap b{font-size:16px;display:block}
+ .cap code{font-size:13px;color:var(--c);font-weight:700}
+ .cap span{display:block;color:#55504C;font-size:12.5px;margin-top:3px}
+ .cap em{font-size:11.5px;color:#8A837D;font-style:normal}
+ iframe{width:660px;height:1180px;border:0;display:block}
+</style>
+<div class="row" id="row"></div>
+<script>
+var C=[
+ {hex:'#C0262E',dark:'#96181F',name:'Logo Red',note:'Sampled straight from the existing logo and printed menu. Zero drift from the signage already on the building.',cr:'5.90:1'},
+ {hex:'#A81119',dark:'#7E0A10',name:'Deep Chili',note:'Same family, pushed darker and cooler. Reads more established and less fast-food.',cr:'7.61:1'},
+ {hex:'#C8382A',dark:'#9E2A1F',name:'Warm Vermilion',note:'A touch of orange in it. Warmest and most appetite-forward of the four.',cr:'5.18:1'},
+ {hex:'#8E1B23',dark:'#6B131A',name:'Oxblood',note:'Deepest and most restrained. Feels upscale, but loses some of the energy.',cr:'9.01:1'}
+];
+var row=document.getElementById('row');
+C.forEach(function(c){
+  var col=document.createElement('div'); col.className='col'; col.style.setProperty('--c',c.hex);
+  col.innerHTML='<div class="cap"><b>'+c.name+'</b><code>'+c.hex+'</code>'+
+    '<span>'+c.note+'</span><em>Contrast on white '+c.cr+' · passes WCAG AA</em></div>';
+  var f=document.createElement('iframe'); f.src='index.html';
+  f.onload=function(){
+    var d=f.contentDocument, s=d.createElement('style');
+    s.textContent=':root{--brand:'+c.hex+';--brand-dark:'+c.dark+'}';
+    d.head.appendChild(s);
+    d.querySelector('.site-header').style.position='static';
+  };
+  col.appendChild(f); row.appendChild(col);
+});
+</script>
