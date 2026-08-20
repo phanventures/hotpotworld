@@ -118,8 +118,10 @@ the restaurant's listing on restaurantguru.com.
    Create a free Formspree form pointed at hotpotworld@gmail.com and replace that
    ID. Until then the form does not deliver. If the site lands on Netlify, use
    Netlify Forms instead (instructions are in the HTML comment above the form).
-2. **Menu.** `menu.html` is a placeholder. The section scaffold and the old menu's
-   section list are in an HTML comment in that file, ready to fill in.
+2. **Menu.** Done 2026-08-20 from the printed 11x14 menu (two PDFs from Anh's
+   dad): tiers ($39.99 / $37.99 senior+military / $20 kids 5-10), BBQ B1-B15,
+   hot pot meats, appetizers $6.99, sauce bar, house rules, drinks. To update,
+   edit the `#menu` section in `index.html`; the markup is plain lists.
 3. **Photography.** Two professional wide shots of the belt were sitting unused
    in `source/originals/` and are now the home hero and the belt section
    (`room-wide`, `room-wide-tall`, `belt-tall`). That closes the gap this item
@@ -134,10 +136,8 @@ the restaurant's listing on restaurantguru.com.
    Names were deliberately not invented.
 5. **Hero video.** Currently the YouTube embed. If the original mp4 turns up, a
    muted autoplay loop behind the hero would be a real upgrade.
-6. **Facts to confirm with the restaurant:** the broth list on the home page comes
-   from the January 2024 printed menu and may have changed under the new all you
-   can eat service. Also worth confirming whether BBQ changed the price for kids or
-   large parties.
+6. **Facts to confirm with the restaurant:** the drive-time and "between the
+   freeway and Pacific Highway" copy in the directions band is ours, not theirs.
 7. **Awards.** Done 2026-08-20: the Seattle Times card links to the article and the
    Restaurant Guru badge is the real one, linked to the listing.
 
