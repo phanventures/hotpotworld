@@ -595,62 +595,18 @@ h3 > .vn { font-size: .82rem; }
 .broth-group .vn { font-size: .92rem; margin-top: .05em; }
 .broth-group small { display: block; margin-top: .2rem; color: var(--bone-dim); font-size: .88rem; }
 
-/* --- menu --------------------------------------------------------------- */
-/* Price tiers read as one line of big numbers, not three cards. */
-.tiers {
-  display: grid;
-  gap: 1.25rem 2.5rem;
-  grid-template-columns: repeat(2, auto);
-  justify-content: start;
-  align-items: end;
-  padding-block: 1.5rem;
-  border-block: 1px solid var(--line);
+/* --- menu: the printed pages ------------------------------------------- */
+.menu-pages { display: grid; gap: clamp(1rem, 2.5vw, 2rem); margin-bottom: 1.75rem; }
+.menu-page {
+  display: block;
+  border-radius: var(--r);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  box-shadow: 0 18px 50px -24px rgba(0,0,0,.45);
+  transition: transform .3s var(--ease), box-shadow .3s var(--ease);
 }
-@media (min-width: 820px) { .tiers { grid-template-columns: repeat(3, auto) 1fr; } }
-.tier b { display: block; font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; line-height: 1; letter-spacing: -.03em; }
-.tier--lead b { color: var(--red-ink); }
-.tier span { display: block; margin-top: .35rem; font-size: .9rem; color: var(--bone-dim); }
-.tier--note { grid-column: 1 / -1; }
-@media (min-width: 820px) { .tier--note { grid-column: auto; max-width: 30ch; justify-self: end; text-align: right; } }
-.tier--note span { margin-top: 0; line-height: 1.5; }
-
-.menu {
-  display: grid;
-  gap: clamp(2rem, 4vw, 3rem) clamp(2rem, 4vw, 3.25rem);
-  grid-template-columns: 1fr;
-  margin-top: clamp(2.5rem, 5vw, 4rem);
-}
-@media (min-width: 620px) { .menu { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 960px) { .menu { grid-template-columns: repeat(4, 1fr); } }
-.menu-group--wide { grid-column: 1 / -1; }
-@media (min-width: 960px) { .menu-group--wide { grid-column: span 2; } }
-
-.menu-group h3 {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 1rem;
-  padding-bottom: .65rem;
-  margin-bottom: .35rem;
-  border-bottom: 1px solid var(--red);
-  font-size: .8rem;
-  font-weight: 600;
-  letter-spacing: .15em;
-  text-transform: uppercase;
-  color: var(--bone);
-}
-.menu-group h3 small { font-size: .78rem; letter-spacing: 0; text-transform: none; font-weight: 400; color: var(--bone-dim); text-align: right; }
-.menu-group ul, .menu-group ol { list-style: none; margin: 0; padding: 0; }
-.menu-group li { padding-block: .6rem; border-bottom: 1px solid var(--line-soft); font-size: 1.02rem; }
-.menu-group li:last-child { border-bottom: 0; }
-.menu-cols { counter-reset: bbq; }
-@media (min-width: 620px) { .menu-cols { columns: 2; column-gap: 2.5rem; } .menu-cols li { break-inside: avoid; } .menu-cols li:nth-child(8) { border-bottom: 0; } }
-.menu-cols li::before { counter-increment: bbq; content: "B" counter(bbq); display: inline-block; min-width: 2.6rem; font-size: .78rem; font-weight: 600; letter-spacing: .06em; color: var(--red-ink); }
-.menu-run { margin: .8rem 0 0; line-height: 1.6; }
-.menu-note { margin: 1rem 0 0; font-size: .9rem; color: var(--bone-dim); line-height: 1.55; }
-.menu-rules li { font-size: .95rem; color: var(--bone-dim); line-height: 1.5; }
-.menu-heading { margin-top: clamp(3rem, 6vw, 4.5rem); font-size: clamp(1.5rem, 2.6vw, 2rem); letter-spacing: -.02em; }
-.menu-heading .vn { font-size: max(1rem, .5em); }
+.menu-page:hover { transform: translateY(-3px); box-shadow: 0 26px 60px -24px rgba(0,0,0,.55); }
+.menu-page img { width: 100%; height: auto; }
 
 /* --- gallery ------------------------------------------------------------ */
 .gallery { display: grid; gap: .85rem; grid-template-columns: repeat(2, 1fr); }

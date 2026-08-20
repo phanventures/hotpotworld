@@ -118,10 +118,12 @@ the restaurant's listing on restaurantguru.com.
    Create a free Formspree form pointed at hotpotworld@gmail.com and replace that
    ID. Until then the form does not deliver. If the site lands on Netlify, use
    Netlify Forms instead (instructions are in the HTML comment above the form).
-2. **Menu.** Done 2026-08-20 from the printed 11x14 menu (two PDFs from Anh's
-   dad): tiers ($39.99 / $37.99 senior+military / $20 kids 5-10), BBQ B1-B15,
-   hot pot meats, appetizers $6.99, sauce bar, house rules, drinks. To update,
-   edit the `#menu` section in `index.html`; the markup is plain lists.
+2. **Menu.** Done 2026-08-20. The `#menu` section shows the printed 11x14 menu
+   as two page images (`assets/menu/menu-page-{1,2}.jpg` + `@2x`) with the PDFs
+   alongside for download. Source PDFs: `source/originals/menu-2026/`. To update:
+   `pdftoppm -r 200 -jpeg -singlefile page.pdf out`, crop to the gold frame
+   (page 1 of the 2026 menu needed `(110,95,2890,2305)` at 200 dpi; page 2 none),
+   export 1100 and 2200 wide at JPEG q84, copy the PDFs into `assets/menu/`.
 3. **Photography.** Two professional wide shots of the belt were sitting unused
    in `source/originals/` and are now the home hero and the belt section
    (`room-wide`, `room-wide-tall`, `belt-tall`). That closes the gap this item
